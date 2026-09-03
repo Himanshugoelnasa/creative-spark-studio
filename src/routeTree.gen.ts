@@ -12,8 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedBillingRouteImport } from './routes/_authenticated/billing'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedImageRouteImport } from './routes/_authenticated/image'
+import { Route as AuthenticatedLibraryRouteImport } from './routes/_authenticated/library'
+import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticated/projects'
 import { Route as AuthenticatedVideoRouteImport } from './routes/_authenticated/video'
 import { Route as AuthenticatedVoiceRouteImport } from './routes/_authenticated/voice'
 
@@ -31,6 +34,11 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedBillingRoute = AuthenticatedBillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -39,6 +47,16 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
 const AuthenticatedImageRoute = AuthenticatedImageRouteImport.update({
   id: '/image',
   path: '/image',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLibraryRoute = AuthenticatedLibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedProjectsRoute = AuthenticatedProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedVideoRoute = AuthenticatedVideoRouteImport.update({
@@ -55,16 +73,22 @@ const AuthenticatedVoiceRoute = AuthenticatedVoiceRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/billing': typeof AuthenticatedBillingRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/image': typeof AuthenticatedImageRoute
+  '/library': typeof AuthenticatedLibraryRoute
+  '/projects': typeof AuthenticatedProjectsRoute
   '/video': typeof AuthenticatedVideoRoute
   '/voice': typeof AuthenticatedVoiceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/billing': typeof AuthenticatedBillingRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/image': typeof AuthenticatedImageRoute
+  '/library': typeof AuthenticatedLibraryRoute
+  '/projects': typeof AuthenticatedProjectsRoute
   '/video': typeof AuthenticatedVideoRoute
   '/voice': typeof AuthenticatedVoiceRoute
 }
@@ -73,23 +97,47 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/billing': typeof AuthenticatedBillingRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/image': typeof AuthenticatedImageRoute
+  '/_authenticated/library': typeof AuthenticatedLibraryRoute
+  '/_authenticated/projects': typeof AuthenticatedProjectsRoute
   '/_authenticated/video': typeof AuthenticatedVideoRoute
   '/_authenticated/voice': typeof AuthenticatedVoiceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard' | '/image' | '/video' | '/voice'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/billing'
+    | '/dashboard'
+    | '/image'
+    | '/library'
+    | '/projects'
+    | '/video'
+    | '/voice'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/image' | '/video' | '/voice'
+  to:
+    | '/'
+    | '/auth'
+    | '/billing'
+    | '/dashboard'
+    | '/image'
+    | '/library'
+    | '/projects'
+    | '/video'
+    | '/voice'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/billing'
     | '/_authenticated/dashboard'
     | '/_authenticated/image'
+    | '/_authenticated/library'
+    | '/_authenticated/projects'
     | '/_authenticated/video'
     | '/_authenticated/voice'
   fileRoutesById: FileRoutesById
@@ -123,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/billing': {
+      id: '/_authenticated/billing'
+      path: '/billing'
+      fullPath: '/billing'
+      preLoaderRoute: typeof AuthenticatedBillingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -135,6 +190,20 @@ declare module '@tanstack/react-router' {
       path: '/image'
       fullPath: '/image'
       preLoaderRoute: typeof AuthenticatedImageRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/library': {
+      id: '/_authenticated/library'
+      path: '/library'
+      fullPath: '/library'
+      preLoaderRoute: typeof AuthenticatedLibraryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/projects': {
+      id: '/_authenticated/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof AuthenticatedProjectsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/video': {
@@ -155,15 +224,21 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBillingRoute: typeof AuthenticatedBillingRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedImageRoute: typeof AuthenticatedImageRoute
+  AuthenticatedLibraryRoute: typeof AuthenticatedLibraryRoute
+  AuthenticatedProjectsRoute: typeof AuthenticatedProjectsRoute
   AuthenticatedVideoRoute: typeof AuthenticatedVideoRoute
   AuthenticatedVoiceRoute: typeof AuthenticatedVoiceRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBillingRoute: AuthenticatedBillingRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedImageRoute: AuthenticatedImageRoute,
+  AuthenticatedLibraryRoute: AuthenticatedLibraryRoute,
+  AuthenticatedProjectsRoute: AuthenticatedProjectsRoute,
   AuthenticatedVideoRoute: AuthenticatedVideoRoute,
   AuthenticatedVoiceRoute: AuthenticatedVoiceRoute,
 }
