@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedImageRouteImport } from './routes/_authenticated/image'
+import { Route as AuthenticatedLibraryRouteImport } from './routes/_authenticated/library'
 import { Route as AuthenticatedVideoRouteImport } from './routes/_authenticated/video'
 import { Route as AuthenticatedVoiceRouteImport } from './routes/_authenticated/voice'
 
@@ -41,6 +42,11 @@ const AuthenticatedImageRoute = AuthenticatedImageRouteImport.update({
   path: '/image',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedLibraryRoute = AuthenticatedLibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedVideoRoute = AuthenticatedVideoRouteImport.update({
   id: '/video',
   path: '/video',
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/image': typeof AuthenticatedImageRoute
+  '/library': typeof AuthenticatedLibraryRoute
   '/video': typeof AuthenticatedVideoRoute
   '/voice': typeof AuthenticatedVoiceRoute
 }
@@ -65,6 +72,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/image': typeof AuthenticatedImageRoute
+  '/library': typeof AuthenticatedLibraryRoute
   '/video': typeof AuthenticatedVideoRoute
   '/voice': typeof AuthenticatedVoiceRoute
 }
@@ -75,14 +83,16 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/image': typeof AuthenticatedImageRoute
+  '/_authenticated/library': typeof AuthenticatedLibraryRoute
   '/_authenticated/video': typeof AuthenticatedVideoRoute
   '/_authenticated/voice': typeof AuthenticatedVoiceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard' | '/image' | '/video' | '/voice'
+  fullPaths:
+    '/' | '/auth' | '/dashboard' | '/image' | '/library' | '/video' | '/voice'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/image' | '/video' | '/voice'
+  to: '/' | '/auth' | '/dashboard' | '/image' | '/library' | '/video' | '/voice'
   id:
     | '__root__'
     | '/'
@@ -90,6 +100,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/dashboard'
     | '/_authenticated/image'
+    | '/_authenticated/library'
     | '/_authenticated/video'
     | '/_authenticated/voice'
   fileRoutesById: FileRoutesById
@@ -137,6 +148,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedImageRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/library': {
+      id: '/_authenticated/library'
+      path: '/library'
+      fullPath: '/library'
+      preLoaderRoute: typeof AuthenticatedLibraryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/video': {
       id: '/_authenticated/video'
       path: '/video'
@@ -157,6 +175,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedImageRoute: typeof AuthenticatedImageRoute
+  AuthenticatedLibraryRoute: typeof AuthenticatedLibraryRoute
   AuthenticatedVideoRoute: typeof AuthenticatedVideoRoute
   AuthenticatedVoiceRoute: typeof AuthenticatedVoiceRoute
 }
@@ -164,6 +183,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedImageRoute: AuthenticatedImageRoute,
+  AuthenticatedLibraryRoute: AuthenticatedLibraryRoute,
   AuthenticatedVideoRoute: AuthenticatedVideoRoute,
   AuthenticatedVoiceRoute: AuthenticatedVoiceRoute,
 }
