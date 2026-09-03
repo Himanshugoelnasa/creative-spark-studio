@@ -148,7 +148,10 @@ function ProjectsPage() {
             <Button
               disabled={!name.trim()}
               onClick={() => {
-                create.mutate({ name: name.trim(), description: description.trim() || undefined });
+                create.mutate({
+                  name: name.trim(),
+                  ...(description.trim() ? { description: description.trim() } : {}),
+                });
                 setName("");
                 setDescription("");
                 setCreating(false);

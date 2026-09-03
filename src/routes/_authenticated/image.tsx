@@ -55,7 +55,7 @@ function ImageStudio() {
     generate.mutate({
       type: "image",
       prompt: `${prompt.trim()} · ${style}`,
-      negativePrompt: negative.trim() || undefined,
+      ...(negative.trim() ? { negativePrompt: negative.trim() } : {}),
       model: model.id,
       modelName: model.name,
       cost: model.cost,
